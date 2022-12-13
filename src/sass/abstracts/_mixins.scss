@@ -5,3 +5,23 @@
   align-items: $align-items;
   gap: $flex-gap;
 }
+
+@mixin media-query($breakpoint) {
+  @if $breakpoint == tab--landscape {
+    @media (max-width: 70em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab--portrait {
+    @media (max-width: 48em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == phone {
+    @media (max-width: 37.5em) {
+      @content;
+    }
+  }
+}

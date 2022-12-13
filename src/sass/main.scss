@@ -2,6 +2,8 @@
 @use "abstracts" as *;
 
 .tracker {
+  width: 100%;
+
   &__header {
     background-image: url(../../images/pattern-bg.png);
     background-repeat: no-repeat;
@@ -10,6 +12,10 @@
     padding: 2.4rem;
     position: relative;
     height: 35vh;
+
+    // @include media-query(tab--portrait) {
+    //   padding: 4.8rem 2.4rem;
+    // }
   }
   &__primary-heading {
     font-size: 3.2rem;
@@ -22,7 +28,6 @@
   &__search {
     display: flex;
     height: 4.8rem;
-    margin-bottom: 4.8rem;
 
     &--input {
       border: none;
@@ -35,10 +40,20 @@
       width: 48rem;
       font-size: 1.6rem;
 
+      @include media-query(phone) {
+        min-width: calc(60rem - 4.8rem);
+        font-size: 2rem;
+        padding: 3.2rem;
+      }
+
       &::placeholder {
         color: var(--clr-grey);
         font-size: 1.6rem;
         letter-spacing: 1px;
+
+        @include media-query(phone) {
+          font-size: 2rem;
+        }
       }
 
       &:hover {
@@ -54,6 +69,12 @@
       border-bottom-right-radius: 15px;
       transition: background-color 0.2s ease-in;
 
+      @include media-query(phone) {
+        padding: 3.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       &:hover {
         cursor: pointer;
         background-color: var(--clr-grey--dark);
@@ -63,6 +84,11 @@
     &--icon {
       width: 1.4rem;
       height: 1.4rem;
+
+      @include media-query(phone) {
+        width: 1.8rem;
+        height: 1.8rem;
+      }
     }
   }
 
@@ -71,18 +97,47 @@
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     column-gap: 3.2rem;
-    width: 110rem;
+    max-width: 110rem;
     background-color: white;
     border-radius: 10px;
     padding: 3.2rem 2.4rem;
 
     position: absolute;
     bottom: -7.5rem;
+    z-index: 999;
+
+    @include media-query(tab--landscape) {
+      max-width: 90rem;
+      column-gap: 1.8rem;
+    }
+
+    @include media-query(tab--portrait) {
+      min-width: 75rem;
+      grid-auto-flow: row;
+      grid-auto-rows: 1fr;
+      text-align: center;
+      row-gap: 3.2rem;
+      bottom: -180px;
+      z-index: 1000;
+    }
+
+    @include media-query(phone) {
+      min-width: 60rem;
+      bottom: -150px;
+    }
   }
 
   &__data {
     position: relative;
-    padding-right: 8rem;
+    padding-right: 4.8rem;
+
+    @include media-query(tab--landscape) {
+      padding-right: 2.4rem;
+    }
+
+    @include media-query(tab--portrait) {
+      padding-right: 0;
+    }
 
     &:not(:last-child)::after {
       content: " ";
@@ -92,6 +147,10 @@
       width: 1px;
       height: 6.4rem;
       background-color: var(--clr-grey);
+
+      @include media-query(tab--portrait) {
+        display: none;
+      }
     }
 
     &--heading {
@@ -106,6 +165,10 @@
       font-size: 2.4rem;
       font-weight: 500;
       color: var(--clr-grey--dark);
+
+      @include media-query(tab--landscape) {
+        font-size: 2.2rem;
+      }
     }
   }
 
