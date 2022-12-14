@@ -14,6 +14,12 @@
   }
 
   @if $breakpoint == tab--portrait {
+    @media (max-width: 56.25em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab--portrait-768 {
     @media (max-width: 48em) {
       @content;
     }
@@ -21,6 +27,12 @@
 
   @if $breakpoint == phone {
     @media (max-width: 37.5em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == phone--375 {
+    @media (max-width: 23.4375em) {
       @content;
     }
   }

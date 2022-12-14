@@ -13,12 +13,16 @@ html {
     font-size: 56.25%;
   }
 
-  @include media-query(tab--portrait) {
+  @include media-query(tab--portrait-768) {
     font-size: 50%;
   }
 
-  @include media-query(tab--landscape) {
+  @include media-query(phone) {
     font-size: 43.75%;
+  }
+
+  @include media-query(phone--375) {
+    font-size: 37.5%;
   }
 }
 

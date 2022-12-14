@@ -2,24 +2,22 @@
 @use "abstracts" as *;
 
 .tracker {
-  width: 100%;
-
   &__header {
+    @include flex(column, initial, center, 0);
+
     background-image: url(../../images/pattern-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
-    @include flex(column, initial, center, 0);
-    padding: 2.4rem;
-    position: relative;
+
     height: 35vh;
 
-    // @include media-query(tab--portrait) {
-    //   padding: 4.8rem 2.4rem;
-    // }
+    padding: 2.4rem;
+    position: relative;
   }
+
   &__primary-heading {
-    font-size: 3.2rem;
     color: white;
+    font-size: 3.2rem;
     font-weight: 500;
     letter-spacing: 1.2px;
     margin-bottom: 3.2rem;
@@ -27,32 +25,53 @@
 
   &__search {
     display: flex;
-    height: 4.8rem;
+    height: 5rem;
+
+    @include media-query(tab--portrait-768) {
+      height: 6.4rem;
+    }
+
+    @include media-query(phone--375) {
+      height: 8rem;
+    }
 
     &--input {
       border: none;
-      outline: none;
-      color: var(--clr-grey--dark);
-      font-weight: 500;
       border-top-left-radius: 15px;
       border-bottom-left-radius: 15px;
-      padding: 2.4rem;
-      width: 48rem;
+
+      color: var(--clr-grey--dark);
+
       font-size: 1.6rem;
+      font-weight: 500;
+
+      outline: none;
+      padding: 2.4rem;
+
+      width: calc(55rem - 4.8rem);
+
+      @include media-query(tab--portrait) {
+        width: calc(50rem - 4.8rem);
+      }
+
+      @include media-query(tab--portrait-768) {
+        font-size: 2.4rem;
+        padding: 3rem;
+        width: calc(60rem - 7rem);
+      }
 
       @include media-query(phone) {
-        min-width: calc(60rem - 4.8rem);
-        font-size: 2rem;
-        padding: 3.2rem;
+        width: calc(50rem - 7rem);
       }
 
       &::placeholder {
         color: var(--clr-grey);
         font-size: 1.6rem;
+        font-weight: 500;
         letter-spacing: 1px;
 
         @include media-query(phone) {
-          font-size: 2rem;
+          font-size: 1.8rem;
         }
       }
 
@@ -62,18 +81,20 @@
     }
 
     &--button {
+      @include flex(initial, center, center, 0);
+
       background-color: black;
-      border: none;
-      width: 4.8rem;
       border-top-right-radius: 15px;
+      border: none;
       border-bottom-right-radius: 15px;
+
+      padding: 2.4rem;
+      width: 4.8rem;
+
       transition: background-color 0.2s ease-in;
 
-      @include media-query(phone) {
-        padding: 3.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      @include media-query(tab--portrait-768) {
+        width: 7rem;
       }
       &:hover {
         cursor: pointer;
@@ -93,37 +114,46 @@
   }
 
   &__data-container {
+    background-color: white;
+    border-radius: 10px;
+
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     column-gap: 3.2rem;
-    max-width: 110rem;
-    background-color: white;
-    border-radius: 10px;
+
+    width: 110rem;
     padding: 3.2rem 2.4rem;
 
     position: absolute;
     bottom: -7.5rem;
+
     z-index: 999;
 
     @include media-query(tab--landscape) {
-      max-width: 90rem;
-      column-gap: 1.8rem;
+      width: 100rem;
+      column-gap: 2.4rem;
     }
 
     @include media-query(tab--portrait) {
-      min-width: 75rem;
+      width: 80rem;
+    }
+
+    @include media-query(tab--portrait-768) {
+      width: 60rem;
       grid-auto-flow: row;
       grid-auto-rows: 1fr;
       text-align: center;
-      row-gap: 3.2rem;
-      bottom: -180px;
-      z-index: 1000;
+      row-gap: 2.4rem;
+      column-gap: 0;
+      bottom: -22.5rem;
     }
 
     @include media-query(phone) {
-      min-width: 60rem;
-      bottom: -150px;
+      width: 50rem;
+      bottom: -19rem;
+    }
+    @include media-query(phone--375) {
     }
   }
 
@@ -136,6 +166,10 @@
     }
 
     @include media-query(tab--portrait) {
+      padding-right: 2rem;
+    }
+
+    @include media-query(tab--portrait-768) {
       padding-right: 0;
     }
 
@@ -148,7 +182,7 @@
       height: 6.4rem;
       background-color: var(--clr-grey);
 
-      @include media-query(tab--portrait) {
+      @include media-query(tab--portrait-768) {
         display: none;
       }
     }
@@ -159,6 +193,10 @@
       font-weight: 700;
       letter-spacing: 1.5px;
       margin-bottom: 1.2rem;
+
+      @include media-query(phone--375) {
+        font-size: 1.6rem;
+      }
     }
 
     &--return {
@@ -168,6 +206,18 @@
 
       @include media-query(tab--landscape) {
         font-size: 2.2rem;
+      }
+
+      @include media-query(tab--portrait) {
+        font-size: 2rem;
+      }
+
+      @include media-query(tab--portrait-768) {
+        font-size: 2.4rem;
+      }
+
+      @include media-query(phone--375) {
+        font-size: 2.8rem;
       }
     }
   }
