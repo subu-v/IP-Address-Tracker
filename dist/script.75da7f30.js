@@ -128,34 +128,44 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var button = document.querySelector(".tracker__search--button");
 var searchInput = document.querySelector(".tracker__search--input");
+var errorElement = document.querySelector(".tracker__search--error");
 var ipField = document.querySelector(".tracker__data--ip");
 var locationField = document.querySelector(".tracker__data--location");
 var timezoneField = document.querySelector(".tracker__data--timezone");
 var ispField = document.querySelector(".tracker__data--isp");
 var map;
+// (IIFE function) helps to render map and data based on the user's current IP address
 var getUserIpAddress = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
   var fetchIP, userIP;
   return _regeneratorRuntime().wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _context.next = 2;
+          _context.prev = 0;
+          _context.next = 3;
           return fetch("https://api.ipify.org/?format=json");
-        case 2:
+        case 3:
           fetchIP = _context.sent;
-          _context.next = 5;
+          _context.next = 6;
           return fetchIP.json();
-        case 5:
+        case 6:
           userIP = _context.sent;
           renderMap(userIP.ip);
-        case 7:
+          _context.next = 13;
+          break;
+        case 10:
+          _context.prev = 10;
+          _context.t0 = _context["catch"](0);
+          errorElement.textContent = "Unable to fetch your ip address";
+        case 13:
         case "end":
           return _context.stop();
       }
     }
-  }, _callee);
+  }, _callee, null, [[0, 10]]);
 }))();
 var renderData = function renderData(data) {
+  // Destructuring
   var ip = data.ip,
     _data$location = data.location,
     city = _data$location.city,
@@ -168,6 +178,17 @@ var renderData = function renderData(data) {
   timezoneField.textContent = "UTC ".concat(timezone);
   ispField.textContent = isp;
 };
+var createMap = function createMap(lat, lng) {
+  // Initialize Map object
+
+  map = L.map("map", {
+    zoomControl: false
+  }).setView([lat, lng], 13);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19
+  }).addTo(map);
+  renderMarker(lat, lng);
+};
 var renderMarker = function renderMarker(lat, lng) {
   var locationIcon = L.icon({
     iconUrl: require("../images/icon-location.svg"),
@@ -177,14 +198,6 @@ var renderMarker = function renderMarker(lat, lng) {
     icon: locationIcon
   }).addTo(map);
 };
-var createMap = function createMap(lat, lng) {
-  map = L.map("map", {
-    zoomControl: false
-  }).setView([lat, lng], 13);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19
-  }).addTo(map);
-};
 var renderMap = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(ip) {
     var fetchUserInfo, retrievedData, _retrievedData$locati, lat, lng;
@@ -192,31 +205,47 @@ var renderMap = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
-            return fetch("https://geo.ipify.org/api/v2/country,city?apiKey=at_VpIUevGOjDKfNMddcE6asZ7G4HBX5&ipAddress=".concat(ip));
-          case 2:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return fetch("https://geo.ipify.org/api/v2/country,city?apiKey=at_zhl5fqzTyMPwPPeCqS9cHPq3W1HIJ&ipAddress=".concat(ip));
+          case 3:
             fetchUserInfo = _context2.sent;
-            _context2.next = 5;
+            _context2.next = 6;
             return fetchUserInfo.json();
-          case 5:
+          case 6:
             retrievedData = _context2.sent;
+            // This function helps to display the retrieved data on the UI
             renderData(retrievedData);
-            _retrievedData$locati = retrievedData.location, lat = _retrievedData$locati.lat, lng = _retrievedData$locati.lng;
+            _retrievedData$locati = retrievedData.location, lat = _retrievedData$locati.lat, lng = _retrievedData$locati.lng; // Creates a new map object
             createMap(lat, lng);
-            renderMarker(lat, lng);
-          case 10:
+            console.log("%c Map successfully created", "color:green; font-weight:bold");
+            _context2.next = 18;
+            break;
+          case 13:
+            _context2.prev = 13;
+            _context2.t0 = _context2["catch"](0);
+            console.trace(_context2.t0);
+            console.error(_context2.t0);
+            errorElement.textContent = "Invalid IP address or Domain name";
+          case 18:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2);
+    }, _callee2, null, [[0, 13]]);
   }));
   return function renderMap(_x) {
     return _ref2.apply(this, arguments);
   };
 }();
 button.addEventListener("click", function (e) {
+  // Remove Error element text
+  errorElement.textContent = "";
+
+  // Remove map object
   map.remove();
+
+  // render the map
   renderMap(searchInput.value);
 });
 },{"../images/icon-location.svg":"../images/icon-location.svg"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -244,7 +273,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49754" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49769" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
