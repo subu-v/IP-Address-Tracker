@@ -41,6 +41,7 @@ const createMap = function (lat, lng) {
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
+    crossOrigin: true,
   }).addTo(map);
 
   renderMarker(lat, lng);
